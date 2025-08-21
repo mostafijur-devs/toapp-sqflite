@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/provider/node_provider.dart';
 import 'package:todo_app/screen/home/home_layout/add_todo_screen.dart';
 import 'home_layout/todo_body.dart';
+import 'home_layout/todo_search_list.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -37,7 +38,10 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         backgroundColor: Colors.blue.withOpacity(0.5),
         actions: [
-
+          IconButton(onPressed: () {
+            List<String> nodeList = context.read<NodeProvider>().nodeList.map((e) => e.title,).toList();
+            showSearch(context: context, delegate: TodoSearchList(titleList:nodeList ));
+          }, icon: Icon(Icons.search_rounded))
 
         ],
       ),
