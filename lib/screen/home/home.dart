@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/models/todo_models.dart';
 import 'package:todo_app/provider/node_provider.dart';
 import 'package:todo_app/screen/home/home_layout/add_todo_screen.dart';
 import 'home_layout/todo_body.dart';
@@ -39,8 +40,8 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.blue.withOpacity(0.5),
         actions: [
           IconButton(onPressed: () {
-            List<String> nodeList = context.read<NodeProvider>().nodeList.map((e) => e.title,).toList();
-            showSearch(context: context, delegate: TodoSearchList(titleList:nodeList ));
+            List<NodeModels> nodeList = context.read<NodeProvider>().nodeList;
+            showSearch(context: context, delegate: TodoSearchList(nodeList:nodeList ));
           }, icon: Icon(Icons.search_rounded))
 
         ],

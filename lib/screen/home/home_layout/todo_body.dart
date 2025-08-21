@@ -3,12 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/screen/home/home_layout/update_task_screen.dart';
 import '../../../heiper_function.dart';
 import '../../../provider/node_provider.dart';
+import '../node_details_page.dart';
 
 class TodoBody extends StatelessWidget {
-  TodoBody({
-    super.key,
-    required this.provider,
-  });
+  TodoBody({super.key, required this.provider});
+
   NodeProvider provider;
 
   @override
@@ -17,6 +16,9 @@ class TodoBody extends StatelessWidget {
       itemBuilder: (context, index) {
         final nodeList = provider.nodeList[index];
         return ListTile(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder:(context) => NodeDetailsPage(nodeModels: nodeList,),));
+          },
           leading: Checkbox(
             onChanged: (value) {
               // context.read<NodeProvider>().upDate(nodeList);
@@ -39,24 +41,31 @@ class TodoBody extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(width: 30,),
-              PopupMenuButton(itemBuilder: (context) {
-                return [
-                  PopupMenuItem(child: Text('Edit'),onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            UpdateTaskScreen(nodeModels: nodeList),
-                      ),
-                    );
-                  }),
-                  PopupMenuItem(child: Text('delete'),onTap: (){
-                    context.read<NodeProvider>().deletNote(nodeList);
-                  }),
-
-                ];
-              } ,),
+              SizedBox(width: 30),
+              PopupMenuButton(
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      child: Text('Edit'),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                UpdateTaskScreen(nodeModels: nodeList),
+                          ),
+                        );
+                      },
+                    ),
+                    PopupMenuItem(
+                      child: Text('delete'),
+                      onTap: () {
+                        context.read<NodeProvider>().deletNote(nodeList);
+                      },
+                    ),
+                  ];
+                },
+              ),
             ],
           ),
         );
